@@ -42,11 +42,11 @@
 		<input class="sub-btn rounded-md" type="text" slot="input" bind:value={profileObj.username} disabled={pending} />
 	</Input>
 
-	<Input text="Contact">
+	<Input text="Contact / Email">
 		<input class="sub-btn rounded-md" type="email" slot="input" bind:value={profileObj.contact} disabled={pending} />
 	</Input>
 
-	<Input text="About">
+	<Input text="Intro">
 		<textarea class="sub-btn rounded-md" slot="input" bind:value={profileObj.about} disabled={pending} />
 	</Input>
 
