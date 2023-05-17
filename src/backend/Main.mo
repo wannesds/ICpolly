@@ -56,16 +56,6 @@ actor {
 		Text.hash(t1 # t2);
 	};
 
-	//TEMP : is not needed if possible to 'concat' records, but makes things clear
-	func _buildUserProfile(user : User, profile : Profile) : UserProfile {
-		return {
-			created = user.created;
-			username = profile.username;
-			contact = profile.contact;
-			about = profile.about;
-		};
-	};
-
 	// DATA STORAGE
 	stable var stableUsers : [(Principal, UserProfile)] = [];
 	let users = HashMap.fromIter<Principal, UserProfile>(Iter.fromArray(stableUsers), 4, Principal.equal, Principal.hash);
@@ -87,15 +77,12 @@ actor {
 	public shared ({ caller }) func createUser(username : Text) : async Result.Result<(), Text> {
 		let null = users.get(caller) else return #err("User is already registered!");
 
-		let user : User = {
+		let userProfile : UserProfile = {
 			created = Time.now();
-		};
-		let profile : Profile = {
 			username;
-			contact = "";
-			about = "";
+			contact = " ";
+			about = " ";
 		};
-		let userProfile : UserProfile = _buildUserProfile(user, profile);
 
 		users.put(caller, userProfile);
 		#ok();
@@ -110,9 +97,14 @@ actor {
 	public shared ({ caller }) func updateProfile(profile : Profile) : async Result.Result<(), Text> {
 		let ?user = users.get(caller) else return #err("User does not exist!");
 
-		let userProfile : UserProfile = _buildUserProfile(user, profile);
+		let userProfile : UserProfile = {
+			created = user.created;
+			username = profile.username;
+			contact = profile.contact;
+			about = profile.about;
+		};
 
-		users.put(caller, userProfile);
+		let ?_ = users.replace(caller, userProfile) else return #err("Could not update profile");
 		#ok();
 	};
 

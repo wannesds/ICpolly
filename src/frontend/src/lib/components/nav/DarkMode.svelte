@@ -13,7 +13,7 @@
 </script>
 
 {#if darkModeReady}
-	<span class="toggle mt-4">
+	<span class="toggle mt-2.5">
 		<input
 			type="checkbox"
 			id="toggle"
@@ -35,7 +35,7 @@
 		display: none;
 	}
 	.toggle label {
-		@apply inline-block cursor-pointer w-12 h-6 rounded-3xl ;
+		@apply inline-block cursor-pointer w-12 h-6 rounded-3xl;
 	}
 	.toggle label::after {
 		content: attr(data-dark);

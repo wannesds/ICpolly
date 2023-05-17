@@ -25,4 +25,6 @@
 	};
 </script>
 
-<div class="flex flex-col gap-4">Home app</div>
+<div class="flex flex-col gap-4">
+	Home app
+</div>

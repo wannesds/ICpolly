@@ -62,7 +62,7 @@ async function checkRegistration(): Promise<void> {
 	let p = await localActor.whoami();
 	let result = await localActor.getUser();
 	if (result.hasOwnProperty('ok')) {
-		user.set(result);
+		user.set(result.ok);
 		authStore.set(AuthState.Registered);
 		caller.set(p);
 		console.log(p);

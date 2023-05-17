@@ -9,4 +9,4 @@
 
 <h2>Well done!</h2>
 <span>Profile finished</span>
-<button on:click={finish} class="hover:bg-slate-500">Continue</button>
+<button on:click={finish} class="main-btn">Continue</button>
