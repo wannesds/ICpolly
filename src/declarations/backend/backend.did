@@ -1,0 +1,25 @@
+type UserProfile = record {
+	about : text;
+	contact : text;
+	created : int;
+	username : text;
+};
+type Result_1 = variant {
+	err : text;
+	ok : UserProfile;
+};
+type Result = variant {
+	err : text;
+	ok;
+};
+type Profile = record {
+	about : text;
+	contact : text;
+	username : text;
+};
+service : {
+	createUser : (text) -> (Result);
+	getUser : () -> (Result_1) query;
+	updateProfile : (Profile) -> (Result);
+	whoami : () -> (principal) query;
+};

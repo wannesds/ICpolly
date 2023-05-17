@@ -1,0 +1,60 @@
+/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.fancy-gradient {
+		@apply bg-gradient-to-br from-cyan-300 via-teal-500 to-emerald-600;
+	}
+	.fancy-border {
+		@apply fancy-gradient font-semibold p-0.5 h-fit w-fit md:mx-0 rounded-full;
+	}
+	.border-main {
+		@apply border-[0.5px] border-slate-700;
+	}
+	.text-gradient {
+		@apply fancy-gradient bg-clip-text text-transparent;
+	}
+	.dark-gradient {
+		@apply bg-gradient-to-br from-cyan-200/10  to-dark-700/30;
+	}
+	.nav-link {
+		@apply flex hover:bg-teal-500/10 rounded-lg gap-1 p-1 pr-8 py-2;
+	}
+	.nav-link-svg {
+		@apply rounded-full h-7 -my-0.5;
+	}
+	.main-btn {/*teal */
+		@apply trans-300 rounded-full border-[1px] p-2 w-fit
+		border-slate-600 hover:bg-teal-400  dark:bg-dark-700 dark:border-teal-600 
+		hover:dark:border-teal-400 hover:dark:bg-teal-700/30 hover:dark:text-white ;
+	}
+	.sub-btn {/*slate*/
+		@apply trans-300 rounded-full border-[1px] p-2 w-fit 
+		border-slate-600 hover:bg-teal-200/40  dark:bg-dark-700 
+		hover:dark:border-teal-400  hover:dark:bg-slate-700/30 hover:dark:text-white ;
+	}
+	.highlight {
+		@apply text-teal-400
+	}
+}
+@layer base {
+	body {
+		@apply bg-white-800 dark:bg-dark-900 text-dark-700 dark:text-teal-100;
+	}
+	h1 {
+		@apply font-bold text-4xl;
+	}
+	h2 {
+		@apply font-bold text-3xl;
+	}
+	
+}
+
+@layer utilities {
+	/* for adding custom css util that tailwind doesnt include */
+	.trans-300 {
+		@apply transition-all ease-in-out duration-300 ;
+	}
+}
