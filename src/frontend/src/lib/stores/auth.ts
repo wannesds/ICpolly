@@ -15,10 +15,12 @@ let authClient: AuthClient;
 
 export async function start() {
 	authClient = await AuthClient.create();
+	console.log('Auth: authClient created');
 
 	if (await authClient.isAuthenticated()) {
 		await checkRegistration();
 	} else {
+		console.log('Auth: logging out!');
 		authStore.set(AuthState.LoggedOut);
 	}
 }
@@ -43,7 +45,9 @@ async function createActor() {
 	// Fetch root key for certificate validation during development
 	if (import.meta.env.VITE_DFX_NETWORK !== 'ic') {
 		agent.fetchRootKey().catch((err) => {
-			console.warn('Unable to fetch root key. Check to ensure that your local replica is running');
+			console.warn(
+				'AuthERR: Unable to fetch root key. Check to ensure that your local replica is running'
+			);
 			console.error(err);
 		});
 	}
@@ -63,10 +67,11 @@ async function checkRegistration(): Promise<void> {
 	let result = await localActor.getUser();
 	if (result.hasOwnProperty('ok')) {
 		user.set(result.ok);
+		console.log('Auth: user set ->', get(user));
 		authStore.set(AuthState.Registered);
 		caller.set(p);
-		console.log(p);
 	} else if (result.hasOwnProperty('err')) {
+		console.log('AuthERR: could not check registration');
 		user = writable<UserProfile>();
 		authStore.set(AuthState.LoggedIn);
 	} else {
