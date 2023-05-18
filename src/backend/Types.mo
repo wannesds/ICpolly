@@ -1,5 +1,5 @@
 module Types {
-    //user should NOT be able to change this
+	//user should NOT be able to change this
 	public type User = {
 		created : Int;
 	};
@@ -13,30 +13,35 @@ module Types {
 
 	public type UserProfile = User and Profile;
 
-    public type QuestionType = {
-        #YesNo ;
-        #MultiChoice : [Text];
-    };
+	public type QuestionType = {
+		#YesNo;
+		#MultiChoice : [Text];
+	};
 
-    public type AnswerType = {
-        #YesNo : Bool;
-        #MultiChoice : Text;
-    };
+	public type AnswerType = {
+		#YesNo : Bool;
+		#MultiChoice : Text;
+	};
 
-    public type Poll = {
-        //TODO add optional image
-        id : Nat;
-        questionType : QuestionType;
-        question : Text;
-        creator : Principal;
-        created : Int;
-        voteCount : Nat;
-    };
+	public type Poll = {
+		//TODO add optional image
+		id : Nat;
+		questionType : QuestionType;
+		question : Text;
+		creator : Principal;
+		created : Int;
+		voteCount : Nat;
+	};
 
-    public type Answer = {
-        pollId : Nat;
-        //user principal could maybe be removed when hashing princ+Nat for answerStore Key
-        principal : Principal; //dont need use type there as user might have more fields in future
-        answer: AnswerType;
-    };
-}
+	public type Answer = {
+		pollId : Nat;
+		//user principal could maybe be removed when hashing princ+Nat for answerStore Key
+		principal : Principal; //dont need use type there as user might have more fields in future
+		answer : AnswerType;
+	};
+
+	public type PollWithYesNoStats = {
+		poll : Poll;
+		yesNoStats : (Nat, Nat);
+	};
+};

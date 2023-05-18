@@ -22,6 +22,6 @@
 	<DarkMode />
 </header>
 
-<main class="flex flex-col justify-between items-center gap-10 px-4 md:px-8">
+<main class="flex flex-col justify-center items-center my-16 gap-10 px-4 md:px-8">
 	<slot />
 </main>

@@ -3,11 +3,11 @@ import Text "mo:base/Text";
 import Nat "mo:base/Nat";
 
 module Utils {
-    public func hashNat(id : Nat) : Hash.Hash {
-        Text.hash(Nat.toText(id));
-    };
+	public func hashNat(id : Nat) : Hash.Hash {
+		Text.hash(Nat.toText(id));
+	};
 
-    //for future storage improvements, make more generalized
+	//for future storage improvements, make more generalized
 	// func hashPoll(created : Int, creater : Principal, question : Text) : Hash.Hash {
 	// 	let t1 = Int.toText(created);
 	// 	let t2 = Principal.toText(creater);

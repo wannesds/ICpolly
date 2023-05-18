@@ -4,15 +4,18 @@
 
 	import Spinner from '$lib/components/utils/Spinner.svelte';
 	import Input from '$lib/components/utils/Input.svelte';
+	import { updateProfile } from '$lib/stores/tasks/updateProfile';
+	import { get } from 'svelte/store';
+	import { onDestroy, onMount } from 'svelte';
 	import { syncAuth } from '$lib/stores/auth';
-	import { goto } from '$app/navigation';
 
 	let pending = false;
+	let userData = get(user);
 
-	let profileObj : Profile = {
-		username: $user.username,
-		contact: $user.contact,
-		about: $user.about
+	let profileObj: Profile = {
+		username: userData.username,
+		contact: userData.contact,
+		about: userData.about
 	};
 
 	async function update() {
@@ -24,21 +27,17 @@
 			about: profileObj.about
 		};
 
-		const result = await $actor.updateProfile(newProfile);
-		if (result.hasOwnProperty('ok')) {
-			await syncAuth();
-			goto('./profile');
-		} else {
-			console.error(result);
-		}
-		pending = false;
+		await updateProfile(newProfile)
+			.catch((err) => {
+				console.log(err.message);
+			})
+			.then(() => {
+				pending = false;
+			});
 	}
 </script>
 
-{#if $user}
-<div
-	class="flex flex-col gap-7 w-fit h-fit mx-auto p-8 rounded-xl justify-start items-center"
->
+<div class="flex flex-col gap-7 w-fit h-fit mx-auto p-8 rounded-xl justify-start items-center">
 	<Input text="Username">
 		<input
 			class="sub-btn rounded-md"
@@ -68,10 +67,9 @@
 		/>
 	</Input>
 
-	<button on:click={update} class="main-btn">
-		{#if pending} <Spinner /> {:else} Update Profile{/if}
-	</button>
+	{#if pending}
+		<Spinner />
+	{:else}
+		<button on:click={update} class="main-btn"> Update Profile </button>
+	{/if}
 </div>
-{:else}
-Loading profile
-{/if}

@@ -10,7 +10,7 @@
 </script>
 
 <div class="flex flex-col w-40 h-full px-6 mt-4 text-lg items-start gap-4">
-	<div class="h-[0.5px] w-full bg-slate-700"/>
+	<div class="h-[0.5px] w-full bg-slate-700" />
 
 	{#if $authStore === AuthState.Registered}
 		<!-- bg-clip-text text-transparent bg-fancy  -->
@@ -18,7 +18,7 @@
 			<a href="./profile" class="dark:text-teal-100  mr-1">{$user.username}</a>
 		</span>
 	{/if}
-	<div class="h-[0.5px] w-full bg-slate-700"/>
+	<div class="h-[0.5px] w-full bg-slate-700" />
 
 	<div class="-ml-2">
 		{#if data}
@@ -28,10 +28,10 @@
 					{section.title}
 				</a>
 			{/each}
-		{/if}	
+		{/if}
 		<LoginBtn />
 	</div>
-	<div class="h-[0.5px] w-full bg-slate-700"/>
+	<div class="h-[0.5px] w-full bg-slate-700" />
 	<DarkMode />
 
 	<a href="https://github.com/" class="flex gap-1 text-sm p-1 hover-color rounded-md ">

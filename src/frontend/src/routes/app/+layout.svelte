@@ -4,10 +4,13 @@
 	import NavBars from '$lib/assets/icons/navBars.svg?component';
 	import NavX from '$lib/assets/icons/navX.svg?component';
 	import Nav from '$lib/components/nav/Nav.svelte';
+	import { onMount } from 'svelte';
+	import { syncAuth } from '$lib/stores/auth';
 
 	export let data: LayoutData;
 
 	let visible = false;
+
 	function toggleNav() {
 		visible = !visible;
 	}

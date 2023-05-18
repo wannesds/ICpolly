@@ -4,34 +4,36 @@
 	import Spinner from '$lib/components/utils/Spinner.svelte';
 	import type { Profile } from 'src/declarations/backend/backend.did';
 	import { RegiState } from '$lib/stores/types';
-	import { syncAuth } from '$lib/stores/auth';
+	import { get } from 'svelte/store';
+	import { updateProfile } from '$lib/stores/tasks/updateProfile';
 
 	let pending = false;
+	let userData = get(user);
 
 	//a user object to temporary store and change OUR values , no type on purpose
 	let profileObj = {
-		username: $user.username,
-		contact: ' ',
-		about: ' '
+		username: userData.username,
+		contact: userData.contact,
+		about: userData.about
 	};
 
 	async function submit() {
 		pending = true;
-		let newProfile: Profile = {
+
+		const newProfile: Profile = {
 			username: profileObj.username,
 			contact: profileObj.contact,
 			about: profileObj.about
 		};
 
-		const result = await $actor.updateProfile(newProfile);
-		if (result.hasOwnProperty('ok')) {
-			// goto('/register/profile');
-			await syncAuth();
-			regiStore.set(RegiState.Finished);
-		} else {
-			console.error(result);
-		}
-		pending = false;
+		await updateProfile(newProfile)
+			.catch((err) => {
+				console.log(err.message);
+			})
+			.then(() => {
+				pending = false;
+				regiStore.set(RegiState.Finished);
+			});
 	}
 </script>
 
@@ -56,6 +58,8 @@
 	/>
 </Input>
 
-<button on:click={submit} class="main-btn">
-	{#if pending} <Spinner /> {:else} Continue {/if}
-</button>
+{#if pending}
+	<Spinner />
+{:else}
+	<button on:click={submit} class="main-btn"> Continue </button>
+{/if}

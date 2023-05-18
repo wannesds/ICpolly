@@ -4,6 +4,21 @@ type UserProfile = record {
 	created : int;
 	username : text;
 };
+type Result_4 = variant {
+	err : text;
+	ok : nat;
+};
+type Result_3 = variant {
+	err : text;
+	ok : vec record {
+		PollWithYesNoStats;
+		bool;
+	};
+};
+type Result_2 = variant {
+	err : text;
+	ok : Poll;
+};
 type Result_1 = variant {
 	err : text;
 	ok : UserProfile;
@@ -12,13 +27,57 @@ type Result = variant {
 	err : text;
 	ok;
 };
+type QuestionType = variant {
+	MultiChoice : vec text;
+	YesNo;
+};
 type Profile = record {
 	about : text;
 	contact : text;
 	username : text;
 };
+type Poll__1 = record {
+	created : int;
+	creator : principal;
+	id : nat;
+	question : text;
+	questionType : QuestionType;
+	voteCount : nat;
+};
+type PollWithYesNoStats = record {
+	poll : Poll__1;
+	yesNoStats : record {
+		nat;
+		nat;
+	};
+};
+type Poll = record {
+	created : int;
+	creator : principal;
+	id : nat;
+	question : text;
+	questionType : QuestionType;
+	voteCount : nat;
+};
+type AnswerType = variant {
+	MultiChoice : text;
+	YesNo : bool;
+};
+type Answer = record {
+	answer : AnswerType;
+	pollId : nat;
+	"principal" : principal;
+};
 service : {
+	answerPoll : (nat, bool) -> (Result);
+	createPoll : (text) -> (Result_4);
 	createUser : (text) -> (Result);
+	deletePoll : (nat) -> (Result);
+	getAllAnswers : () -> (vec Answer) query;
+	getAllPolls : () -> (vec Poll) query;
+	getAllPollsWithYesNoAnswers : () -> (Result_3) query;
+	getPoll : (nat) -> (Result_2) query;
+	getPollAnswerScore : (nat) -> (nat, nat) query;
 	getUser : () -> (Result_1) query;
 	updateProfile : (Profile) -> (Result);
 	whoami : () -> (principal) query;

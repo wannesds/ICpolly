@@ -26,9 +26,9 @@
 
 <h2>Choose a username</h2>
 
-<Input text="Username">
+<Input text="">
 	<input
-		class="sub-btn rounded-md"
+		class="sub-btn"
 		type="text"
 		disabled={pending}
 		id="username"
@@ -39,10 +39,8 @@
 
 <!-- show error -->
 
-<button on:click={register} class="main-btn">
-	{#if pending}
-		<Spinner />
-	{:else}
-		Register
-	{/if}
-</button>
+{#if pending}
+	<Spinner />
+{:else}
+	<button on:click={register} class="main-btn"> Register </button>
+{/if}

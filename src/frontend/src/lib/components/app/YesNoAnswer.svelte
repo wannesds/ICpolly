@@ -1,0 +1,45 @@
+<script lang="ts">
+	import { actor, user } from '$lib/stores';
+	import Spinner from '../utils/Spinner.svelte';
+
+	export let pollId: bigint;
+
+	let answer: boolean;
+	//AnswerType
+	//{ 'YesNo' : boolean } | { 'MultiChoice' : string }
+
+	const handleAnswerPoll = async () => {
+		//showRes = true;
+		promise = await $actor.answerPoll(pollId, answer);
+		if (promise.Ok) {
+			return promise.Ok;
+		} else {
+			throw new Error(promise.Err);
+		}
+	};
+	let promise: any;
+
+	const handleClick = (input: boolean) => {
+		answer = input;
+
+		promise = handleAnswerPoll();
+	};
+</script>
+
+<div class="flex gap-6 m-auto">
+	{#if answer}
+		{#await promise}
+			<Spinner />
+			<p>Sending Answer</p>
+		{:then}
+			<p>Voted!</p>
+		{:catch error}
+			<p class="text-red-500">{error.message}</p>
+		{/await}
+	{:else if $user}
+		<button on:click={() => handleClick(true)} class="sub-btn hover:text-green-600">Yes</button>
+		<button on:click={() => handleClick(true)} class="sub-btn hover:text-red-600">No</button>
+	{:else}
+		<p>Connect with Internet-Identity to vote</p>
+	{/if}
+</div>
