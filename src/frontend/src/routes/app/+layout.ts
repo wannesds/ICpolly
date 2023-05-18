@@ -6,7 +6,8 @@ export const load: LayoutLoad = async () => {
 	return {
 		sections: [
 			{ slug: 'home', title: 'Home', icon: Home },
-			{ slug: 'profile', title: 'Me', icon: User }
+			{ slug: 'profile', title: 'Profile', icon: User },
+			{ slug: 'Polls', title: 'Polls', icon: User }
 		]
 	};
 };

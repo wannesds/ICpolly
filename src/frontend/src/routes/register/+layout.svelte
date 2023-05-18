@@ -18,7 +18,6 @@
 </script>
 
 <header class="flex w-full justify-between h-fit px-4 md:px-8">
-
 	<h2 class="text-2xl h-fit my-auto w-fit">Poll<span class="highlight">y</span></h2>
 	<DarkMode />
 </header>

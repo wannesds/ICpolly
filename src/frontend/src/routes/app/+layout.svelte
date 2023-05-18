@@ -4,7 +4,6 @@
 	import NavBars from '$lib/assets/icons/navBars.svg?component';
 	import NavX from '$lib/assets/icons/navX.svg?component';
 	import Nav from '$lib/components/nav/Nav.svelte';
-	import DarkMode from '$lib/components/nav/DarkMode.svelte';
 
 	export let data: LayoutData;
 
@@ -28,7 +27,7 @@
 
 <main class="flex w-full min-h-screen">
 	{#if visible}
-		<div class="fixed w-40 bg-dark-900/90 h-full" on:mouseleave={toggleNav}>
+		<div class="fixed w-40 bg-teal-50/90 dark:bg-neutral-900/90 h-full" on:mouseleave={toggleNav}>
 			<Nav {data} path="" />
 		</div>
 	{:else}
@@ -36,14 +35,11 @@
 			<Nav {data} path="" />
 		</div>
 	{/if}
-	
 
-	<slot/>
+	<slot />
 </main>
 
-<footer
-	class="h-fit flex gap-2 justify-start w-full py-2 px-4 md:px-8"
->
+<footer class="h-fit flex gap-2 justify-start w-full py-2 px-4 md:px-8">
 	<a href="https://internetcomputer.org" class="">
 		<ICPBanner class=" vi opacity-70 hover:opacity-90" />
 	</a>

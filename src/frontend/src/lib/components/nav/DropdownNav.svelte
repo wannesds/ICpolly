@@ -1,5 +1,4 @@
 <script lang="ts">
-	import DarkMode from './DarkMode.svelte';
 	import NavBars from '$lib/assets/icons/navBars.svg?component';
 	import NavX from '$lib/assets/icons/navX.svg?component';
 	import Nav from './Nav.svelte';

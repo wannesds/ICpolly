@@ -9,7 +9,7 @@
 
 	let pending = false;
 
-	let profileObj = {
+	let profileObj : Profile = {
 		username: $user.username,
 		contact: $user.contact,
 		about: $user.about
@@ -18,8 +18,8 @@
 	async function update() {
 		pending = true;
 
-		const newProfile : Profile = {
-			username: profileObj.username ,
+		const newProfile: Profile = {
+			username: profileObj.username,
 			contact: profileObj.contact,
 			about: profileObj.about
 		};
@@ -27,7 +27,7 @@
 		const result = await $actor.updateProfile(newProfile);
 		if (result.hasOwnProperty('ok')) {
 			await syncAuth();
-			goto("./profile")
+			goto('./profile');
 		} else {
 			console.error(result);
 		}
@@ -35,24 +35,43 @@
 	}
 </script>
 
-<div class="flex flex-col gap-5 w-fit h-fit mx-auto p-8 rounded-xl dark:bg-dark-800 justify-start items-center">
-	<h2 class="text-3xl mx-auto">Profile settings</h2>
-
+{#if $user}
+<div
+	class="flex flex-col gap-7 w-fit h-fit mx-auto p-8 rounded-xl justify-start items-center"
+>
 	<Input text="Username">
-		<input class="sub-btn rounded-md" type="text" slot="input" bind:value={profileObj.username} disabled={pending} />
+		<input
+			class="sub-btn rounded-md"
+			type="text"
+			slot="input"
+			bind:value={profileObj.username}
+			disabled={pending}
+		/>
 	</Input>
 
 	<Input text="Contact / Email">
-		<input class="sub-btn rounded-md" type="email" slot="input" bind:value={profileObj.contact} disabled={pending} />
+		<input
+			class="sub-btn rounded-md"
+			type="email"
+			slot="input"
+			bind:value={profileObj.contact}
+			disabled={pending}
+		/>
 	</Input>
 
 	<Input text="Intro">
-		<textarea class="sub-btn rounded-md" slot="input" bind:value={profileObj.about} disabled={pending} />
+		<textarea
+			class="sub-btn rounded-md"
+			slot="input"
+			bind:value={profileObj.about}
+			disabled={pending}
+		/>
 	</Input>
-
-
 
 	<button on:click={update} class="main-btn">
 		{#if pending} <Spinner /> {:else} Update Profile{/if}
 	</button>
 </div>
+{:else}
+Loading profile
+{/if}

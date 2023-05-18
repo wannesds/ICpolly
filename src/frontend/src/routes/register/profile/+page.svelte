@@ -11,8 +11,8 @@
 	//a user object to temporary store and change OUR values , no type on purpose
 	let profileObj = {
 		username: $user.username,
-		contact: " ",
-		about: " "
+		contact: ' ',
+		about: ' '
 	};
 
 	async function submit() {
@@ -38,11 +38,22 @@
 <h2>Setup your profile</h2>
 
 <Input text="Contact">
-	<input class="sub-btn rounded-md" type="email" slot="input" bind:value={profileObj.contact} disabled={pending} />
+	<input
+		class="sub-btn rounded-md"
+		type="email"
+		slot="input"
+		bind:value={profileObj.contact}
+		disabled={pending}
+	/>
 </Input>
 
 <Input text="About">
-	<textarea class="sub-btn rounded-md" slot="input" bind:value={profileObj.about} disabled={pending} />
+	<textarea
+		class="sub-btn rounded-md"
+		slot="input"
+		bind:value={profileObj.about}
+		disabled={pending}
+	/>
 </Input>
 
 <button on:click={submit} class="main-btn">

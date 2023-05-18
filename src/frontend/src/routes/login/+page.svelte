@@ -7,7 +7,7 @@
 </script>
 
 <h1 class="my-20 px-4">
-	Decentralized <span class="highlight">Polling</span> & <span class="highlight">Survey</span> platform
+	Decentralized <span class="highlight">Polling</span> & <span class="highlight">Survey</span> service
 </h1>
 
 <h2>Earn by <span class="highlight">Voting</span></h2>

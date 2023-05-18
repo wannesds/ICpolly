@@ -27,7 +27,14 @@
 <h2>Choose a username</h2>
 
 <Input text="Username">
-	<input class="sub-btn rounded-md" type="text" disabled={pending} id="username" slot="input" bind:value={username} />
+	<input
+		class="sub-btn rounded-md"
+		type="text"
+		disabled={pending}
+		id="username"
+		slot="input"
+		bind:value={username}
+	/>
 </Input>
 
 <!-- show error -->
