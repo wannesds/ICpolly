@@ -26,7 +26,7 @@
 	};
 </script>
 
-<div class="flex flex-col w-full md:w-8/12 mt-5 mx-auto gap-5 p-4 justify-start items-center">
+<div class="flex flex-col justify-start h-full items-center w-full md:w-8/12 mx-auto gap-5 p-4 ">
 	DEV: Currently only Type: Yes/No Questions
 	<input bind:value={input} class="w-full sub-btn" placeholder="type your question..." />
 

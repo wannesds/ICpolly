@@ -5,7 +5,7 @@
 
 @layer components {
 	.fancy-gradient {
-		@apply bg-gradient-to-br from-cyan-300 via-teal-500 to-emerald-600;
+		@apply bg-gradient-to-b from-teal-200 to-teal-400;
 	}
 	.fancy-border {
 		@apply fancy-gradient font-semibold p-0.5 h-fit w-fit md:mx-0 rounded-full;
@@ -16,11 +16,14 @@
 	.text-gradient {
 		@apply fancy-gradient bg-clip-text text-transparent;
 	}
-	.dark-gradient {
-		@apply bg-gradient-to-b from-dark-900 to-dark-900/95;
+	.black-gradient {
+		@apply bg-gradient-to-b from-dark-900 via-dark-900/90 to-dark-900;
+	}
+	.white-gradient {
+		@apply bg-gradient-to-b from-slate-100 via-slate-200 to-slate-100;
 	}
 	.nav-link {
-		@apply flex rounded-lg px-2 py-1 font-semibold dark:text-slate-300 hover:bg-teal-200/40 hover:text-dark-800 hover:dark:bg-teal-900/10  hover:dark:text-teal-200;
+		@apply flex rounded-lg px-2 py-1 font-semibold dark:text-teal-100/70 hover:bg-teal-200/40 hover:text-dark-800 hover:dark:bg-teal-900/10  hover:dark:text-teal-100;
 	}
 	.nav-link-svg {
 		@apply rounded-full h-7 -my-0.5;
@@ -38,7 +41,7 @@
 		hover:dark:border-teal-400  hover:dark:bg-slate-700/30 hover:dark:text-white;
 	}
 	.highlight {
-		@apply text-teal-400;
+		@apply text-gradient;
 	}
 	.hover-color {
 		@apply text-slate-400 hover:text-dark-700 dark:text-slate-700 hover:dark:text-teal-200;
@@ -52,7 +55,7 @@
 }
 @layer base {
 	body {
-		@apply bg-teal-50 dark:dark-gradient text-dark-700 dark:text-white-800 font-semibold;
+		@apply bg-teal-50 white-gradient dark:black-gradient text-dark-700 dark:text-white-800 font-semibold;
 	}
 	h1 {
 		@apply font-bold text-5xl;

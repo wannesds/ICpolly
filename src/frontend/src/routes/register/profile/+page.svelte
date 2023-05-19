@@ -9,12 +9,33 @@
 
 	let pending = false;
 	let userData = get(user);
+	let avatar: any;
+	let fileInput: any;
 
 	//a user object to temporary store and change OUR values , no type on purpose
-	let profileObj = {
+	let profileObj: Profile = {
 		username: userData.username,
 		contact: userData.contact,
-		about: userData.about
+		about: userData.about,
+		img: []
+	};
+
+	const onFileSelected = (e: any) => {
+		//reads file and shows in UI
+		let image = e.target?.files[0];
+		let reader = new FileReader();
+		reader.readAsDataURL(image);
+		reader.onload = (res) => {
+			avatar = res.target?.result;
+		};
+
+		//transforms file to array for backend
+		let writer = new FileReader();
+		writer.readAsArrayBuffer(image);
+		writer.onload = (res) => {
+			let avatarArr: any = res.target?.result;
+			profileObj.img = new Uint8Array(avatarArr);
+		};
 	};
 
 	async function submit() {
@@ -23,7 +44,8 @@
 		const newProfile: Profile = {
 			username: profileObj.username,
 			contact: profileObj.contact,
-			about: profileObj.about
+			about: profileObj.about,
+			img: profileObj.img
 		};
 
 		await updateProfile(newProfile)
@@ -38,6 +60,23 @@
 </script>
 
 <h2>Setup your profile</h2>
+
+<button
+	class="sub-btn mx-auto"
+	on:click={() => {
+		fileInput.click();
+	}}
+>
+	<img src={avatar} alt="" class="rounded-full w-40 h-40" />
+	<input
+		style="display:none"
+		type="file"
+		accept=".jpg, .jpeg, .png"
+		on:change={(e) => onFileSelected(e)}
+		bind:this={fileInput}
+		disabled={pending}
+	/>
+</button>
 
 <Input text="Contact">
 	<input
