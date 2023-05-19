@@ -5,41 +5,62 @@
 	import Spinner from '$lib/components/utils/Spinner.svelte';
 	import { updateProfile } from '$lib/stores/tasks/updateProfile';
 	import { get } from 'svelte/store';
+	import { onMount } from 'svelte';
 
 	let pending = false;
 	let userData = get(user);
-	let imgInput: Uint8Array;
-	let imgRes: Uint8Array;
+	// let imgInput: any;
+	// let imgRes: Uint8Array;
 
 	let profileObj: Profile = {
 		username: userData.username,
 		contact: userData.contact,
 		about: userData.about,
-		img: []
+		img: userData.img
 	};
-	$: {
-	}
-	const handleFileInput = async () => {
-		//const uint8Array = await convertImageToUInt8Array(imgInput);
-		// const reader = new FileReader();
-		// let x = new Uint8Array(reader.result);
-		let image = new Uint8Array(imgInput);
-		let blob = new Blob([image]);
-		console.log(imgInput, '///', image, '////', blob);
+	
+
+	let avatar : any;
+	let avatarArr: any;
+	let fileInput : any;
+
+
+	console.log($user)
+
+	//FROM BACKEND ARR TO FILE
+	onMount(() => {
+		let image = new Uint8Array($user.img)
+
+		console.log("init image", image)
+
+		let blob = new Blob([image], { type: 'image/png' });
 		let reader = new FileReader();
-		reader.onload = function (e) {
-			console.log('res:', reader.target.result.img());
+		reader.readAsDataURL(blob)
+		reader.onload = res => {
+			avatar = res.target?.result
+			console.log("avatarOnMount : ",avatar)
 		};
-		reader.readAsDataURL(blob);
-		//reader.readAsArrayBuffer(blob)
-
-		//console.log(x)
-
-		//const blob = new Blob([uint8Array]);
-		//testBlob = blob;
-		//profileObj.img = uint8Array;
-		//let imgUrl = URL.createObjectURL(blob);
-	};
+	})
+	
+	//FROM FILE TO BACKEND ARR
+	const onFileSelected = (e:any) => {
+		//reads file and shows in UI
+  		let image = e.target?.files[0];
+		console.log("image:",image)
+		let reader = new FileReader();
+		reader.readAsDataURL(image);
+		reader.onload = res => {
+			avatar = res.target?.result
+			console.log("avatarAfter : ",avatar)
+		};
+		//transforms file to array for backend
+		let writer = new FileReader();
+		writer.readAsArrayBuffer(image);
+		writer.onload = res => {
+			avatarArr = res.target?.result
+			profileObj.img = new Uint8Array(avatarArr)
+		};
+	}
 
 	async function update() {
 		pending = true;
@@ -48,15 +69,10 @@
 			username: profileObj.username,
 			contact: profileObj.contact,
 			about: profileObj.about,
-			img: userData.img
+			img: profileObj.img
 		};
-		// let image = new Uint8Array();
-		// let blob = new Blob([image]);
-		// let reader = new FileReader();
-		// reader.onload = function(e) {
-		// }
-		// reader.readAsDataURL(blob);
-		// console.log("test 1 ", profileObj.img)
+
+		console.log("update :", newProfile.img)
 
 		await updateProfile(newProfile)
 			.catch((err) => {
@@ -68,34 +84,49 @@
 	}
 </script>
 
-<div class="flex flex-col gap-3 w-fit h-fit mx-auto p-8 rounded-xl justify-start items-center">
-	<h3>Username</h3>
+<div class="flex flex-col gap-2 w-fit bg-slate-500/10 h-fit mx-auto p-8 rounded-xl items-center">
+	
+	<button class="sub-btn mx-auto" on:click={()=>{fileInput.click();}}>
+		<img src="{avatar}" alt="d" class="rounded-full w-40 h-40"/>
+		<input  
+			style="display:none"
+			type="file" accept=".jpg, .jpeg, .png" 
+			on:change={(e) => onFileSelected(e)}
+			bind:this={fileInput}
+			disabled={pending}
+		>
+	</button> 
+
+	<p class="">Username</p>
 	<input
-		class="sub-btn rounded-md"
+		class="sub-btn rounded-md text-xl w-full"
 		type="text"
 		bind:value={profileObj.username}
 		disabled={pending}
 	/>
-	<h3>Social Contact / Email</h3>
+	<p>Social Contact / Email</p>
 	<input
-		class="sub-btn rounded-md"
+		class="sub-btn rounded-md w-full"
 		type="email"
 		bind:value={profileObj.contact}
 		disabled={pending}
 	/>
 
-	<h3>About yourself</h3>
-	<textarea class="sub-btn rounded-md" bind:value={profileObj.about} disabled={pending} />
+	<p>About yourself</p>
+	<textarea class="sub-btn rounded-md w-full h-32" bind:value={profileObj.about} disabled={pending} />
 
-	<h3>Profile picture</h3>
-	<input
+	<!-- <input
 		type="file"
 		alt="submit img"
 		class="sub-btn rounded-md"
+		accept="image/gif, image/jpeg, image/png"
 		bind:value={imgInput}
 		on:change={handleFileInput}
 		disabled={pending}
-	/>
+	/> -->
+	
+	
+	
 
 	{#if pending}
 		<Spinner />
