@@ -6,7 +6,7 @@
 </script>
 
 <a
-	class="w-fit nav-link decoration-transparent rounded-md cursor-pointer flex"
+	class="w-fit nav-link decoration-transparent rounded-md cursor-pointer flex -ml-2"
 	href={null}
 	on:click={$authStore === AuthState.LoggedIn || $authStore === AuthState.Registered
 		? logout

@@ -23,5 +23,8 @@ export enum RootState {
 }
 export enum AppState {
 	Home,
-	Profile
+	Profile,
+	Create,
+	Polls,
+	Report
 }

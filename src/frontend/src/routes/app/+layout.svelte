@@ -28,9 +28,9 @@
 	<h2 class="text-2xl h-fit my-auto w-fit">Poll<span class="highlight">y</span></h2>
 </header>
 
-<main class="flex w-full min-h-screen">
+<main class="flex w-full min-h-screen justify-between">
 	{#if visible}
-		<div class="fixed w-40 bg-teal-50/90 dark:bg-neutral-900/90 h-full" on:mouseleave={toggleNav}>
+		<div class="fixed z-50 w-40 bg-teal-50/95 dark:bg-dark-900/95 h-full" on:mouseleave={toggleNav}>
 			<Nav {data} path="" />
 		</div>
 	{:else}

@@ -40,6 +40,7 @@ export const idlFactory = ({ IDL }) => {
 	});
 	const Result_2 = IDL.Variant({ ok: Poll, err: IDL.Text });
 	const UserProfile = IDL.Record({
+		img: IDL.Vec(IDL.Nat8),
 		created: IDL.Int,
 		contact: IDL.Text,
 		about: IDL.Text,
@@ -47,6 +48,7 @@ export const idlFactory = ({ IDL }) => {
 	});
 	const Result_1 = IDL.Variant({ ok: UserProfile, err: IDL.Text });
 	const Profile = IDL.Record({
+		img: IDL.Vec(IDL.Nat8),
 		contact: IDL.Text,
 		about: IDL.Text,
 		username: IDL.Text

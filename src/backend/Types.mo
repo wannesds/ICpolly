@@ -1,3 +1,4 @@
+import Blob "mo:base/Blob";
 module Types {
 	//user should NOT be able to change this
 	public type User = {
@@ -9,6 +10,7 @@ module Types {
 		username : Text;
 		contact : Text;
 		about : Text;
+		img : Blob;
 	};
 
 	public type UserProfile = User and Profile;

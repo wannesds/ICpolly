@@ -26,7 +26,7 @@
 	};
 </script>
 
-<div class="flex gap-6 m-auto">
+<div class="flex gap-5 m-auto">
 	{#if answer}
 		{#await promise}
 			<Spinner />
@@ -37,8 +37,12 @@
 			<p class="text-red-500">{error.message}</p>
 		{/await}
 	{:else if $user}
-		<button on:click={() => handleClick(true)} class="sub-btn hover:text-green-600">Yes</button>
-		<button on:click={() => handleClick(true)} class="sub-btn hover:text-red-600">No</button>
+		<button on:click={() => handleClick(true)} class="main-btn dark:shadow-none w-24 h-9 p-0"
+			>Yes</button
+		>
+		<button on:click={() => handleClick(false)} class="main-btn dark:shadow-none w-24 h-9 p-0"
+			>No</button
+		>
 	{:else}
 		<p>Connect with Internet-Identity to vote</p>
 	{/if}

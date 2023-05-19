@@ -5,7 +5,8 @@ import { get } from 'svelte/store';
 export async function updateProfile(newProfile: Profile) {
 	const localActor = get(actor);
 	console.log('newUserToSend', newProfile);
-	await localActor.updateProfile(newProfile).then((res) => {
+	await localActor.updateProfile(newProfile).then(async (res) => {
+		console.log('res from updateProfile', res);
 		await syncAuth();
 	});
-};
+}

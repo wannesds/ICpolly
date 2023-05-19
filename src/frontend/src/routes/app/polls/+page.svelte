@@ -14,7 +14,7 @@
 	console.log(polls);
 </script>
 
-<div class="flex flex-col w-full">
+<div class="flex flex-col w-full gap-2">
 	{#await polls}
 		<p>Loading polls...</p>
 	{:then polls}

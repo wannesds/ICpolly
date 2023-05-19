@@ -2,6 +2,7 @@ type UserProfile = record {
 	about : text;
 	contact : text;
 	created : int;
+	img : blob;
 	username : text;
 };
 type Result_4 = variant {
@@ -34,6 +35,7 @@ type QuestionType = variant {
 type Profile = record {
 	about : text;
 	contact : text;
+	img : blob;
 	username : text;
 };
 type Poll__1 = record {

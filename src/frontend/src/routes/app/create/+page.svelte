@@ -26,7 +26,8 @@
 	};
 </script>
 
-<div class="flex flex-col p-2 gap-4">
+<div class="flex flex-col w-full md:w-8/12 mt-5 mx-auto gap-5 p-4 justify-start items-center">
+	DEV: Currently only Type: Yes/No Questions
 	<input bind:value={input} class="w-full sub-btn" placeholder="type your question..." />
 
 	<button class="main-btn mx-auto" on:click={handleClick}> Create poll </button>
@@ -36,7 +37,7 @@
 			{#await promise}
 				<p>Creating Poll ...</p>
 			{:then result}
-				<p>Poll created!</p>
+				<p>Poll created!{result}</p>
 			{:catch error}
 				<p class="text-red-500">{error.message}</p>
 			{/await}

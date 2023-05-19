@@ -1,7 +1,6 @@
 <script lang="ts">
 	import DarkMode from './DarkMode.svelte';
 	import LoginBtn from './LoginBtn.svelte';
-	import GithubLogo from '$lib/assets/icons/gh.svg?component';
 	import { authStore, user } from '$lib/stores';
 	import { AuthState } from '$lib/stores/types';
 
@@ -29,13 +28,8 @@
 				</a>
 			{/each}
 		{/if}
-		<LoginBtn />
 	</div>
 	<div class="h-[0.5px] w-full bg-slate-700" />
+	<LoginBtn />
 	<DarkMode />
-
-	<a href="https://github.com/" class="flex gap-1 text-sm p-1 hover-color rounded-md ">
-		<GithubLogo class="w-6 rounded-full text-slate-300" />
-		<span class="m-auto">Polly v0.0.2</span>
-	</a>
 </div>

@@ -153,6 +153,7 @@ actor {
 			username;
 			contact = " ";
 			about = " ";
+			img = "";
 		};
 
 		userStore.put(caller, userProfile);
@@ -172,6 +173,7 @@ actor {
 			username = profile.username;
 			contact = profile.contact;
 			about = profile.about;
+			img = profile.img;
 		};
 
 		let ?_ = userStore.replace(caller, userProfile) else return #err("Could not update profile");
@@ -225,7 +227,7 @@ actor {
 			answer = #YesNo(answerBool);
 		};
 		//I know , there are better ways to do this, ( like having mutable voteCount and changing mute state before put in hashmap, or use of classes maybe)
-		let updatedPoll : Poll = {
+		var updatedPoll : Poll = {
 			id = poll.id;
 			questionType = poll.questionType;
 			question = poll.question;

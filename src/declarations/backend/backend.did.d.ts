@@ -28,6 +28,7 @@ export interface Poll__1 {
 	questionType: QuestionType;
 }
 export interface Profile {
+	img: Uint8Array | number[];
 	contact: string;
 	about: string;
 	username: string;
@@ -39,6 +40,7 @@ export type Result_2 = { ok: Poll } | { err: string };
 export type Result_3 = { ok: Array<[PollWithYesNoStats, boolean]> } | { err: string };
 export type Result_4 = { ok: bigint } | { err: string };
 export interface UserProfile {
+	img: Uint8Array | number[];
 	created: bigint;
 	contact: string;
 	about: string;

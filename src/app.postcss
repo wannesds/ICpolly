@@ -16,6 +16,9 @@
 	.text-gradient {
 		@apply fancy-gradient bg-clip-text text-transparent;
 	}
+	.dark-gradient {
+		@apply bg-gradient-to-b from-dark-900 to-dark-900/95;
+	}
 	.nav-link {
 		@apply flex rounded-lg px-2 py-1 font-semibold dark:text-slate-300 hover:bg-teal-200/40 hover:text-dark-800 hover:dark:bg-teal-900/10  hover:dark:text-teal-200;
 	}
@@ -49,7 +52,7 @@
 }
 @layer base {
 	body {
-		@apply bg-teal-50 dark:bg-neutral-900  text-dark-700 dark:text-white-800;
+		@apply bg-teal-50 dark:dark-gradient text-dark-700 dark:text-white-800 font-semibold;
 	}
 	h1 {
 		@apply font-bold text-5xl;
