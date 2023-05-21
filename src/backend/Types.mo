@@ -33,6 +33,7 @@ module Types {
 		creator : Principal;
 		created : Int;
 		voteCount : Nat;
+		fund : Nat;
 	};
 
 	public type Answer = {
