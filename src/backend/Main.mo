@@ -53,10 +53,10 @@ actor {
 		noPollFetch = "Could not fetch requested poll data!";
 	};
 
-	//Didnt had time to test out and integrate vessel/mops for natlabs ICRC dependencies 
+	//Didnt had time to test out and integrate vessel/mops for natlabs ICRC dependencies
 	//so PollyLedger is hosted in different dfx project/repo
 	// let pollyLedger = actor("q3fc5-haaaa-aaaaa-aaahq-cai") : actor {
-    //     //OLD getAllStudentsPrincipal : shared () -> async [Principal];
+	//     //OLD getAllStudentsPrincipal : shared () -> async [Principal];
 	// 	icrc1_name: shared () -> async Text;
 	// 	icrc1_symbol: shared query () -> async Text;
 	// 	icrc1_decimals: shared query () -> async Nat8;
@@ -67,8 +67,8 @@ actor {
 	// 	icrc1_balance_of: shared query (args : ICRC1.Account) -> async ICRC1.Balance;
 	// 	icrc1_supported_standards: shared query () -> async [ICRC1.SupportedStandard];
 	// 	icrc1_transfer: shared (args : ICRC1.TransferArgs) -> async ICRC1.TransferResult {
-    // };
-	
+	// };
+
 	// PRIVATE FUNCTIONS
 
 	func _verifyAnswerType(a : AnswerType, q : QuestionType) : Bool {
