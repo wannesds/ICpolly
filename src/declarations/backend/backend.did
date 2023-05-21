@@ -75,6 +75,7 @@ service : {
 	createPoll : (text) -> (Result_4);
 	createUser : (text) -> (Result);
 	deletePoll : (nat) -> (Result);
+	deposit_cycles : () -> ();
 	getAllAnswers : () -> (vec Answer) query;
 	getAllPolls : () -> (vec Poll) query;
 	getAllPollsWithYesNoAnswers : () -> (Result_3) query;

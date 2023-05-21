@@ -58,6 +58,7 @@ export const idlFactory = ({ IDL }) => {
 		createPoll: IDL.Func([IDL.Text], [Result_4], []),
 		createUser: IDL.Func([IDL.Text], [Result], []),
 		deletePoll: IDL.Func([IDL.Nat], [Result], []),
+		deposit_cycles: IDL.Func([], [], []),
 		getAllAnswers: IDL.Func([], [IDL.Vec(Answer)], ['query']),
 		getAllPolls: IDL.Func([], [IDL.Vec(Poll)], ['query']),
 		getAllPollsWithYesNoAnswers: IDL.Func([], [Result_3], ['query']),

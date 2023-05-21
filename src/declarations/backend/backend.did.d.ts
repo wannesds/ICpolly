@@ -51,6 +51,7 @@ export interface _SERVICE {
 	createPoll: ActorMethod<[string], Result_4>;
 	createUser: ActorMethod<[string], Result>;
 	deletePoll: ActorMethod<[bigint], Result>;
+	deposit_cycles: ActorMethod<[], undefined>;
 	getAllAnswers: ActorMethod<[], Array<Answer>>;
 	getAllPolls: ActorMethod<[], Array<Poll>>;
 	getAllPollsWithYesNoAnswers: ActorMethod<[], Result_3>;

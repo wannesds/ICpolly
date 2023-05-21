@@ -19,6 +19,7 @@ import Float "mo:base/Float";
 import Order "mo:base/Order";
 import None "mo:base/None";
 import Error "mo:base/Error";
+import ExperimentalCycles "mo:base/ExperimentalCycles";
 
 import Util "Utils";
 import T "Types";
@@ -35,6 +36,12 @@ actor {
 	public type Answer = T.Answer;
 	public type PollWithYesNoStats = T.PollWithYesNoStats;
 
+	public type Account = T.Account;
+	public type Subaccount = T.Subaccount;
+	public type Memo = T.Memo;
+	public type Timestamp = T.Timestamp;
+	public type TransferArgs = T.TransferArgs;
+
 	//CONSTANTS
 	let genericErr = {
 		getPoll = "Couldn't find poll with id ";
@@ -46,6 +53,22 @@ actor {
 		noPollFetch = "Could not fetch requested poll data!";
 	};
 
+	//Didnt had time to test out and integrate vessel/mops for natlabs ICRC dependencies 
+	//so PollyLedger is hosted in different dfx project/repo
+	// let pollyLedger = actor("q3fc5-haaaa-aaaaa-aaahq-cai") : actor {
+    //     //OLD getAllStudentsPrincipal : shared () -> async [Principal];
+	// 	icrc1_name: shared () -> async Text;
+	// 	icrc1_symbol: shared query () -> async Text;
+	// 	icrc1_decimals: shared query () -> async Nat8;
+	// 	icrc1_fee: shared query () -> async ICRC1.Balance;
+	// 	icrc1_metadata: shared query () -> async [ICRC1.MetaDatum];
+	// 	icrc1_total_supply: shared query () -> async ICRC1.Balance;
+	// 	icrc1_minting_account: shared query () -> async ?ICRC1.Account;
+	// 	icrc1_balance_of: shared query (args : ICRC1.Account) -> async ICRC1.Balance;
+	// 	icrc1_supported_standards: shared query () -> async [ICRC1.SupportedStandard];
+	// 	icrc1_transfer: shared (args : ICRC1.TransferArgs) -> async ICRC1.TransferResult {
+    // };
+	
 	// PRIVATE FUNCTIONS
 
 	func _verifyAnswerType(a : AnswerType, q : QuestionType) : Bool {
@@ -264,6 +287,14 @@ actor {
 		};
 
 		#ok(Buffer.toArray(buf));
+	};
+
+	//LEDGER
+	// Deposit cycles into this archive canister.
+	public shared func deposit_cycles() : async () {
+		let amount = ExperimentalCycles.available();
+		let accepted = ExperimentalCycles.accept(amount);
+		assert (accepted == amount);
 	};
 
 	//TEST FUNCTIONS

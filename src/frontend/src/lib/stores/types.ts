@@ -25,6 +25,7 @@ export enum AppState {
 	Home,
 	Profile,
 	Create,
+	Token,
 	Polls,
 	Report
 }
