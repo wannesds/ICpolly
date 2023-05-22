@@ -80,7 +80,6 @@ async function checkRegistration(): Promise<void> {
 		reader.onload = (res) => {
 			avatar.set(res.target?.result);
 		};
-		
 	} else if (result.hasOwnProperty('err')) {
 		console.log('AuthERR: could not check registration');
 		user = writable<UserProfile>();

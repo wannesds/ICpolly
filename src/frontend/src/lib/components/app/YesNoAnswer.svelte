@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { actor, user } from '$lib/stores';
+	import { actor, syncAuth, user } from '$lib/stores';
 	import Spinner from '../utils/Spinner.svelte';
 
 	export let pollId: bigint;
 
 	let answer: boolean;
+	let pending: boolean = false;
 	//AnswerType
 	//{ 'YesNo' : boolean } | { 'MultiChoice' : string }
 
@@ -20,6 +21,7 @@
 	let promise: any;
 
 	const handleClick = (input: boolean) => {
+		pending = true;
 		answer = input;
 
 		promise = handleAnswerPoll();
@@ -27,7 +29,7 @@
 </script>
 
 <div class="flex gap-2 items-center">
-	{#if answer}
+	{#if pending}
 		{#await promise}
 			<Spinner />
 			<p>Sending Answer</p>

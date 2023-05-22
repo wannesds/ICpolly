@@ -7,7 +7,7 @@
 		if (res.ok) {
 			return res.ok;
 		} else {
-			throw new Error('Could not fetch polls');
+			throw new Error('Could not fetch polls :');
 		}
 	};
 	let polls = getPolls();
