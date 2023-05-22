@@ -40,8 +40,6 @@ actor {
 
 	public type LTResult<T, E> = { #Ok : T; #Err : E };
 
-
-
 	//CONSTANTS
 	let genericErr = {
 		getPoll = "Couldn't find poll with id ";
@@ -54,19 +52,21 @@ actor {
 	};
 
 	//also checked out NatLab, pretty cool stuff, will use that in the future, for now basic vanilla icrc1
+	//came to the conclusion that Id be better of making in an app token icrc integration
+	// let pollyLedger = actor ("q3fc5-haaaa-aaaaa-aaahq-cai") : actor {
+	// 	icrc1_name : shared () -> async Text;
+	// 	icrc1_symbol : shared query () -> async Text;
+	// 	icrc1_decimals : shared query () -> async Nat8;
+	// 	icrc1_fee : shared query () -> async Nat;
+	// 	icrc1_metadata : shared query () -> async [(Text, LT.Value)];
+	// 	icrc1_total_supply : shared query () -> async LT.Tokens;
+	// 	icrc1_minting_account : shared query () -> async ?LT.Account;
+	// 	icrc1_balance_of : shared query (account : LT.Account) -> async LT.Tokens;
+	// 	icrc1_supported_standards : shared query () -> async [{ name : Text; url : Text }];
+	// 	icrc1_transfer : shared (args : LT.TransferArgs) -> async LTResult<LT.TxIndex, LT.TransferError>;
+	// 	icrc1_transfer_from : shared (args : LT.TransferArgsFrom) -> async LTResult<LT.TxIndex, LT.TransferError>;
 
-	let pollyLedger = actor("q3fc5-haaaa-aaaaa-aaahq-cai") : actor {
-		icrc1_name: shared () -> async Text;
-		icrc1_symbol: shared query () -> async Text;
-		icrc1_decimals: shared query () -> async Nat8;
-		icrc1_fee: shared query () -> async Nat;
-		icrc1_metadata: shared query () -> async [(Text, LT.Value)];
-		icrc1_total_supply: shared query () -> async LT.Tokens;
-		icrc1_minting_account: shared query () -> async ?LT.Account;
-		icrc1_balance_of: shared query (account : LT.Account) -> async LT.Tokens;
-		icrc1_supported_standards: shared query () -> async [{ name : Text; url : Text;}];
-		icrc1_transfer: shared (args : LT.TransferArgs) -> async LTResult<LT.TxIndex, LT.TransferError>;
-	};
+	// };
 
 	// PRIVATE FUNCTIONS
 
@@ -177,18 +177,21 @@ actor {
 			about = " ";
 			img = "";
 		};
-		let args : LT.TransferArgs = {
-			from_subaccount = null;
-			to = { owner = caller; subaccount = null; };
-			memo = null;
-			created_at_time = null;
-			amount : LT.Tokens = 10_000_000;
-			fee = null;
-		};
-
+		// let args : LT.TransferArgs = {
+		// 	from_subaccount = null;
+		// 	to = { owner = caller; subaccount = null };
+		// 	memo = null;
+		// 	created_at_time = null;
+		// 	amount : LT.Tokens = 10_000_000;
+		// 	fee = null;
+		// };
+		// try {
+		// 	let txnRes = await pollyLedger.icrc1_transfer(args);
+		// 	Debug.print(debug_show ("Txn result on creation +10 :", txnRes));
+		// } catch (_) {
+		// 	Debug.print(debug_show ("Txn failed"));
+		// };
 		userStore.put(caller, userProfile);
-		let txnRes = await pollyLedger.icrc1_transfer(args) ;
-		Debug.print(debug_show ("Txn result on creation +10 :", txnRes));
 		#ok();
 	};
 
@@ -214,7 +217,7 @@ actor {
 
 	//POLLS
 
-	public shared ({ caller }) func createPoll(question : Text, amount : Nat) : async Result.Result<Nat, Text> {
+	public shared ({ caller }) func createPoll(question : Text) : async Result.Result<Nat, Text> {
 		let ?user = userStore.get(caller) else return #err(genericErr.notRegistered);
 		let true = (question.size() >= 8) else return #err("Your question is too short!");
 
@@ -225,18 +228,18 @@ actor {
 			creator = caller;
 			created = Time.now();
 			voteCount = 0;
-			fund = amount;
+			fund = 0; //temp null , should also be added as input
 		};
-		let args : LT.TransferArgs = {
-			from_subaccount = null;
-			to = { owner = caller; subaccount = null; };
-			memo = null;
-			created_at_time = null;
-			amount : LT.Tokens = 10_000_000;
-			fee = null;
-		};
+		// let args : LT.TransferArgs = {
+		// 	from_subaccount = null;
+		// 	to = { owner = caller; subaccount = null; };
+		// 	memo = null;
+		// 	created_at_time = null;
+		// 	amount : LT.Tokens = 10_000_000;
+		// 	fee = null;
+		// };
 
-		let txnRes = await pollyLedger.icrc1_transfer(args);
+		// let txnRes = await pollyLedger.icrc1_transfer(args);
 
 		pollStore.put(pollIdCount, newPoll);
 		//increment pollId for next poll
@@ -278,6 +281,7 @@ actor {
 			creator = poll.creator;
 			created = poll.created;
 			voteCount = poll.voteCount + 1;
+			fund = poll.fund;
 		};
 
 		try {
@@ -325,36 +329,36 @@ actor {
 		assert (accepted == amount);
 	};
 
+	//TEMP FUNCTION //converted in one for ledger
+	// public shared ({ caller }) func airdropStudents() : async Bool {
+	// 	let ?acc = await pollyLedger.icrc1_minting_account() else return false;
 
-	//TEMP FUNCTION
-	public shared ({ caller }) func airdropStudents() : async Bool {
-		let ?acc = await pollyLedger.icrc1_minting_account() else return false;
-		let true = (caller == acc.owner) else return false;
+	// 	let bootcamp = actor("rww3b-zqaaa-aaaam-abioa-cai") : actor {
+	// 		getAllStudentsPrincipal : shared () -> async [Principal];
+	// 	};
 
-		let bootcamp = actor("rww3b-zqaaa-aaaam-abioa-cai") : actor {
-			getAllStudentsPrincipal : shared () -> async [Principal];
-		};
-
-		try {
-			let students : [Principal] = await bootcamp.getAllStudentsPrincipal();
-			for (principal in students.vals()) {
-				let args : LT.TransferArgs = {
-					from_subaccount = null;
-					to = { owner = principal; subaccount = null; };
-					memo = null;
-					created_at_time = null;
-					amount = 10_000_000;
-					fee = null;
-				};
-				ignore await pollyLedger.icrc1_transfer(args);
-				//ignoring and not getting result type bcs of 300+ iterations, 
-			};
-		} catch (e) {
-			return false
-		};
-		//change function to some alrdy build in error, transaction or mint result?
-		true
-    };
+	// 	try {
+	// 		let students : [Principal] = await bootcamp.getAllStudentsPrincipal();
+	// 		for (principal in students.vals()) {
+	// 			let args : LT.TransferArgs = {
+	// 				from_subaccount = null;
+	// 				to = { owner = principal; subaccount = null; };
+	// 				memo = null;
+	// 				created_at_time = null;
+	// 				amount = 10_000_000;
+	// 				fee = null;
+	// 			};
+	// 			if (caller == acc.owner) else {
+	// 				ignore await pollyLedger.icrc1_transfer(args);
+	// 			}
+	// 			//ignoring and not getting result type bcs of 300+ iterations,
+	// 		};
+	// 	} catch (e) {
+	// 		return false
+	// 	};
+	// 	//change function to some alrdy build in error, transaction or mint result?
+	// 	true
+	// };
 
 	//TEST FUNCTIONS
 	public shared query func getAllPolls() : async [Poll] {

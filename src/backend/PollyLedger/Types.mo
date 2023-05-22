@@ -1,7 +1,7 @@
 import Buffer "mo:base/Buffer";
 
 module {
-    public type Account = { owner : Principal; subaccount : ?Subaccount };
+	public type Account = { owner : Principal; subaccount : ?Subaccount };
 	public type Subaccount = Blob;
 	public type Tokens = Nat;
 	public type Memo = Blob;
@@ -46,8 +46,13 @@ module {
 		amount : Tokens;
 	};
 
-    public type TransferArgs = CommonFields and {
-        from_subaccount : ?Subaccount;
+	public type TransferArgs = CommonFields and {
+		from_subaccount : ?Subaccount;
+		to : Account;
+		amount : Tokens;
+	};
+	public type TransferArgsFrom = CommonFields and {
+		from : Account;
 		to : Account;
 		amount : Tokens;
 	};

@@ -13,6 +13,7 @@ export interface Poll {
 	creator: Principal;
 	voteCount: bigint;
 	question: string;
+	fund: bigint;
 	questionType: QuestionType;
 }
 export interface PollWithYesNoStats {
@@ -25,6 +26,7 @@ export interface Poll__1 {
 	creator: Principal;
 	voteCount: bigint;
 	question: string;
+	fund: bigint;
 	questionType: QuestionType;
 }
 export interface Profile {
@@ -51,7 +53,7 @@ export interface _SERVICE {
 	createPoll: ActorMethod<[string], Result_4>;
 	createUser: ActorMethod<[string], Result>;
 	deletePoll: ActorMethod<[bigint], Result>;
-	deposit_cycles: ActorMethod<[], undefined>;
+	depositCycles: ActorMethod<[], undefined>;
 	getAllAnswers: ActorMethod<[], Array<Answer>>;
 	getAllPolls: ActorMethod<[], Array<Poll>>;
 	getAllPollsWithYesNoAnswers: ActorMethod<[], Result_3>;

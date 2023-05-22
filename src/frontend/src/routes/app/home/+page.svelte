@@ -23,6 +23,7 @@
 	<h1 class="">
 		Decentralized <span class="highlight">Polling</span> & <span class="highlight">Survey</span> service
 	</h1>
+	<p>ICRC still in development , not launched yet</p>
 
 	<h2>- Earn POLL by <span class="highlight">Voting</span></h2>
 	<h2>
@@ -34,12 +35,7 @@
 
 	Currently In Development:
 	<h3>
-		+ <span class="highlight">StudentReportWall</span>
+		<h3>+ <span class="highlight">POLL</span>-ICRC integrated + Airdrop + App integration</h3>
+		+<span class="highlight">MultipleChoice</span> + Choose QuestionType on create poll
 	</h3>
-	<h3>
-		+ <span class="highlight">MultipleChoice</span> + Choose QuestionType on create poll
-	</h3>
-	Awaiting Development:
-	<h3>+ <span class="highlight">POLL</span>-Token Ledger + Airdrop + App integration</h3>
-	<h3>+ <span class="highlight">Dynamic Slugs</span> for polls</h3>
 </div>

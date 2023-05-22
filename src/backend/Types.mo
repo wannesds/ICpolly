@@ -47,19 +47,4 @@ module Types {
 		poll : Poll;
 		yesNoStats : (Nat, Nat);
 	};
-
-	//ICRC1
-	public type Account = { owner : Principal; subaccount : ?Subaccount };
-	public type Subaccount = Blob;
-	public type Memo = Blob;
-	public type Timestamp = Nat64;
-
-	public type TransferArgs = {
-		from_subaccount : ?Subaccount;
-		to : Account;
-		amount : Nat;
-		fee : ?Nat;
-		memo : ?Blob;
-		created_at_time : ?Timestamp;
-	};
 };

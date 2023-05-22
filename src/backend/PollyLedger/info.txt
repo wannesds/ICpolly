@@ -1,0 +1,8 @@
+Should make integrated form with app canister with better types and checks into project, or use natlabs.
+Didnt launch ledger live in the end, but had some calls/transfer + airdrop alrdy integrated in app, just hit a bottleneck, no time
+
+//dfx
+"PollyLedger": {
+    "main": "src/backend/PollyLedger/Ledger.mo",
+    "type": "motoko"
+},

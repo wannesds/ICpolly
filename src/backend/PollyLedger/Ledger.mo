@@ -63,7 +63,7 @@ actor class Ledger(init : { initial_mints : [{ account : { owner : Principal; su
 	};
 
 	public type TransferArgs = CommonFields and {
-        from_subaccount : ?Subaccount;
+		from_subaccount : ?Subaccount;
 		to : Account;
 		amount : Tokens;
 	};
@@ -403,6 +403,27 @@ actor class Ledger(init : { initial_mints : [{ account : { owner : Principal; su
 		});
 	};
 
+	public shared ({ caller }) func icrc1_transfer_from({
+		from : Account;
+		to : Account;
+		amount : Tokens;
+		fee : ?Tokens;
+		memo : ?Memo;
+		created_at_time : ?Timestamp;
+	}) : async Result<TxIndex, TransferError> {
+		assert { caller == init.initial_mints[0].account.owner };
+		applyTransfer({
+			spender = from.owner;
+			source = #Icrc1Transfer;
+			from = from;
+			to = to;
+			amount = amount;
+			fee = fee;
+			memo = memo;
+			created_at_time = created_at_time;
+		});
+	};
+
 	public query func icrc1_balance_of(account : Account) : async Tokens {
 		balance(account, log);
 	};
@@ -580,6 +601,39 @@ actor class Ledger(init : { initial_mints : [{ account : { owner : Principal; su
 
 	public query func icrc2_allowance({ account : Account; spender : Principal }) : async Allowance {
 		allowance(account, spender, Nat64.fromNat(Int.abs(Time.now())));
+	};
+
+	public shared ({ caller }) func airdropStudents() : async Result<Text, Text> {
+		assert (caller == init.minting_account.owner);
+
+		let bootcamp = actor ("rww3b-zqaaa-aaaam-abioa-cai") : actor {
+			getAllStudentsPrincipal : shared () -> async [Principal];
+		};
+
+		try {
+			let students : [Principal] = await bootcamp.getAllStudentsPrincipal();
+			label l for (principal in students.vals()) {
+				if (principal == caller) continue l;
+				let args = {
+					to = { owner = principal; subaccount = null };
+					memo = null;
+					created_at_time = null;
+					amount = 1_000_000_000;
+					fee = null;
+					from = { owner = caller; subaccount = null };
+					source = #Icrc1Transfer;
+					spender = caller;
+				};
+
+				ignore applyTransfer(args)
+				//fix result
+				//ignoring and not getting result type bcs of 300+ iterations,
+			};
+		} catch (e) {
+			return #Err("failed");
+		};
+		//change function to some alrdy build in error, transaction or mint result?
+		#Ok("airdrop worked");
 	};
 
 };

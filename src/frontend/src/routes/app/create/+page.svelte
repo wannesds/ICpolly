@@ -37,7 +37,7 @@
 			{#await promise}
 				<p>Creating Poll ...</p>
 			{:then result}
-				<p>Poll created!{result}</p>
+				<p>Poll created!</p>
 			{:catch error}
 				<p class="text-red-500">{error.message}</p>
 			{/await}

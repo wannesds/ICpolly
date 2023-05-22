@@ -41,6 +41,7 @@ type Profile = record {
 type Poll__1 = record {
 	created : int;
 	creator : principal;
+	fund : nat;
 	id : nat;
 	question : text;
 	questionType : QuestionType;
@@ -56,6 +57,7 @@ type PollWithYesNoStats = record {
 type Poll = record {
 	created : int;
 	creator : principal;
+	fund : nat;
 	id : nat;
 	question : text;
 	questionType : QuestionType;
@@ -75,7 +77,7 @@ service : {
 	createPoll : (text) -> (Result_4);
 	createUser : (text) -> (Result);
 	deletePoll : (nat) -> (Result);
-	deposit_cycles : () -> ();
+	depositCycles : () -> ();
 	getAllAnswers : () -> (vec Answer) query;
 	getAllPolls : () -> (vec Poll) query;
 	getAllPollsWithYesNoAnswers : () -> (Result_3) query;
