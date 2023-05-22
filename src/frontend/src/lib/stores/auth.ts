@@ -10,6 +10,7 @@ import { AuthState, type BackendActor } from './types';
 export const authStore = writable<AuthState>();
 export let actor = writable<BackendActor>();
 export let user = writable<UserProfile>(); //named let user instead of userProfile for ease
+export let avatar = writable<any>();
 export let caller = writable<Principal>();
 let authClient: AuthClient;
 
@@ -70,6 +71,16 @@ async function checkRegistration(): Promise<void> {
 		console.log('Auth: user set ->', get(user));
 		authStore.set(AuthState.Registered);
 		caller.set(p);
+
+		let userData = get(user);
+		let image = new Uint8Array(userData.img);
+		let blob = new Blob([image], { type: 'image/png' });
+		let reader = new FileReader();
+		reader.readAsDataURL(blob);
+		reader.onload = (res) => {
+			avatar.set(res.target?.result);
+		};
+		
 	} else if (result.hasOwnProperty('err')) {
 		console.log('AuthERR: could not check registration');
 		user = writable<UserProfile>();
