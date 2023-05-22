@@ -47,4 +47,10 @@ module Types {
 		poll : Poll;
 		yesNoStats : (Nat, Nat);
 	};
+
+	public type BugReport = {
+		creator : Principal;
+		message : Text;
+		img : Blob;
+	};
 };

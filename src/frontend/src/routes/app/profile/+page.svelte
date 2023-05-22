@@ -80,7 +80,7 @@
 			fileInput.click();
 		}}
 	>
-		<img src={avatar} alt="d" class="rounded-full w-40 h-40" />
+		<img src={avatar} alt="." class="rounded-full w-40 h-40" />
 		<input
 			style="display:none"
 			type="file"

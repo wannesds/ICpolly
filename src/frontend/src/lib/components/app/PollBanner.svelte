@@ -23,7 +23,7 @@
 
 <!-- border-[1px] border-solid border-slate-500 -->
 <div
-	class="flex flex-col sub-btn text-base dark:shadow-none shadow-none rounded-xl p-2 gap-2 w-11/12 sm:w-9/12 md:w-8/12 mx-auto"
+	class="flex flex-col sub-btn text-base dark:shadow-none shadow-none rounded-xl p-2 gap-2 w-11/12 md:9/12 mx-auto"
 >
 	<div class="flex text-xl gap-2">
 		<div class=" px-2 py-1 rounded-md bg-teal-400/10">

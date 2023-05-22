@@ -63,6 +63,11 @@ type Poll = record {
 	questionType : QuestionType;
 	voteCount : nat;
 };
+type BugReport = record {
+	creator : principal;
+	img : blob;
+	message : text;
+};
 type AnswerType = variant {
 	MultiChoice : text;
 	YesNo : bool;
@@ -74,11 +79,13 @@ type Answer = record {
 };
 service : {
 	answerPoll : (nat, bool) -> (Result);
+	createBugReport : (text, blob) -> (Result_4);
 	createPoll : (text) -> (Result_4);
 	createUser : (text) -> (Result);
 	deletePoll : (nat) -> (Result);
 	depositCycles : () -> ();
 	getAllAnswers : () -> (vec Answer) query;
+	getAllBugReports : () -> (vec BugReport) query;
 	getAllPolls : () -> (vec Poll) query;
 	getAllPollsWithYesNoAnswers : () -> (Result_3) query;
 	getPoll : (nat) -> (Result_2) query;

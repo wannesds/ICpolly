@@ -1,4 +1,4 @@
-import Bug from '$lib/assets/icons/bug.svg?component';
+import Bug from '$lib/assets/icons/bug.svg';
 import Home from '$lib/assets/icons/home.svg?component';
 import Plus from '$lib/assets/icons/plus-circle.svg';
 import Polls from '$lib/assets/icons/polls.svg?component';

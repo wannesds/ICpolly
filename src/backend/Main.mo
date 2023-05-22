@@ -37,6 +37,7 @@ actor {
 	public type Poll = T.Poll;
 	public type Answer = T.Answer;
 	public type PollWithYesNoStats = T.PollWithYesNoStats;
+	public type BugReport = T.BugReport;
 
 	public type LTResult<T, E> = { #Ok : T; #Err : E };
 
@@ -136,6 +137,16 @@ actor {
 		(yesCount, noCount);
 	};
 
+	func _getAllBugReports() : [BugReport] {
+		let buf = Buffer.Buffer<BugReport>(8);
+
+		for ((key, value) in bugReportStore.entries()) {
+			buf.add(value);
+		};
+
+		Buffer.toArray(buf);
+	};
+
 	// DATA STORAGE
 	stable var pollIdCount : Nat = 0;
 	stable var answerIdCount : Nat = 0; //temp
@@ -149,17 +160,22 @@ actor {
 	stable var stableAnswers : [(Nat, Answer)] = [];
 	let answerStore = HashMap.fromIter<Nat, Answer>(Iter.fromArray(stableAnswers), 8, Nat.equal, Util.hashNat);
 
+	stable var stableBugReports : [(Nat, BugReport)] = [];
+	let bugReportStore = HashMap.fromIter<Nat, BugReport>(Iter.fromArray(stableBugReports), 4, Nat.equal, Util.hashNat);
+
 	// Upgrade canister
 	system func preupgrade() {
 		stableUsers := Iter.toArray(userStore.entries());
 		stablePolls := Iter.toArray(pollStore.entries());
 		stableAnswers := Iter.toArray(answerStore.entries());
+		stableBugReports := Iter.toArray(bugReportStore.entries());
 	};
 
 	system func postupgrade() {
 		stableUsers := [];
 		stablePolls := [];
 		stableAnswers := [];
+		stableBugReports := [];
 	};
 
 	// USER/PROFILE REGISTER
@@ -313,6 +329,24 @@ actor {
 		};
 
 		#ok(Buffer.toArray(buf));
+	};
+
+	public shared ({ caller }) func createBugReport(message : Text, img : Blob) : async Result.Result<Nat, Text> {
+		let ?user = userStore.get(caller) else return #err(genericErr.notRegistered);
+
+		let newBugReport : BugReport = {
+			creator = caller;
+			img = img;
+			message = message;
+		};
+
+		bugReportStore.put(bugReportStore.size(), newBugReport);
+
+		#ok(bugReportStore.size());
+	};
+
+	public shared query func getAllBugReports() : async [BugReport] {
+		_getAllBugReports();
 	};
 
 	//LEDGER

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { getAllPollsWithYesNoAnswers } from '$lib/stores/tasks/getAllPollsWithYesNoAnswers';
 	import PollBanner from '$lib/components/app/PollBanner.svelte';
+	import { actor } from '$lib/stores';
 
 	const getPolls = async () => {
-		let res = await getAllPollsWithYesNoAnswers();
-		if (res) {
+		let res = await $actor.getAllPollsWithYesNoAnswers();
+		if (res.ok) {
 			return res.ok;
 		} else {
 			throw new Error('Could not fetch polls');

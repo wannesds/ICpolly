@@ -35,7 +35,7 @@
 
 	Currently In Development:
 	<h3>
-		<h3>+ <span class="highlight">POLL</span>-ICRC integrated + Airdrop + App integration</h3>
-		+<span class="highlight">MultipleChoice</span> + Choose QuestionType on create poll
+		<h3>- <span class="highlight">POLL</span>-ICRC integrated + Airdrop + App integration</h3>
+		-<span class="highlight">MultipleChoice</span> + Choose QuestionType on create poll
 	</h3>
 </div>

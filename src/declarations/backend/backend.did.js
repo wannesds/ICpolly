@@ -10,6 +10,11 @@ export const idlFactory = ({ IDL }) => {
 		answer: AnswerType,
 		pollId: IDL.Nat
 	});
+	const BugReport = IDL.Record({
+		img: IDL.Vec(IDL.Nat8),
+		creator: IDL.Principal,
+		message: IDL.Text
+	});
 	const QuestionType = IDL.Variant({
 		YesNo: IDL.Null,
 		MultiChoice: IDL.Vec(IDL.Text)
@@ -57,11 +62,13 @@ export const idlFactory = ({ IDL }) => {
 	});
 	return IDL.Service({
 		answerPoll: IDL.Func([IDL.Nat, IDL.Bool], [Result], []),
+		createBugReport: IDL.Func([IDL.Text, IDL.Vec(IDL.Nat8)], [Result_4], []),
 		createPoll: IDL.Func([IDL.Text], [Result_4], []),
 		createUser: IDL.Func([IDL.Text], [Result], []),
 		deletePoll: IDL.Func([IDL.Nat], [Result], []),
 		depositCycles: IDL.Func([], [], []),
 		getAllAnswers: IDL.Func([], [IDL.Vec(Answer)], ['query']),
+		getAllBugReports: IDL.Func([], [IDL.Vec(BugReport)], ['query']),
 		getAllPolls: IDL.Func([], [IDL.Vec(Poll)], ['query']),
 		getAllPollsWithYesNoAnswers: IDL.Func([], [Result_3], ['query']),
 		getPoll: IDL.Func([IDL.Nat], [Result_2], ['query']),

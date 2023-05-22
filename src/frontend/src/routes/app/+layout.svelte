@@ -4,7 +4,8 @@
 	import NavBars from '$lib/assets/icons/navBars.svg?component';
 	import NavX from '$lib/assets/icons/navX.svg?component';
 	import Nav from '$lib/components/nav/Nav.svelte';
-	import { caller } from '$lib/stores';
+	import { caller, syncAuth } from '$lib/stores';
+	import { onMount } from 'svelte';
 
 	export let data: LayoutData;
 
@@ -13,6 +14,9 @@
 	function toggleNav() {
 		visible = !visible;
 	}
+	onMount(async () => {
+		await syncAuth();
+	});
 </script>
 
 <!-- TODO make s$lotted component for header and others -->
@@ -59,6 +63,6 @@
 		<a href="https://ooudp-kiaaa-aaaak-aagvq-cai.raw.ic0.app/" class="h-fit hover-color"
 			>Motoko Bootcamp 2023 Q2</a
 		>
-		<a href="/">Your principal : {caller}</a>
+		<!-- <a href="/">Your principal : {caller}</a> -->
 	</span>
 </footer>

@@ -7,6 +7,11 @@ export interface Answer {
 	pollId: bigint;
 }
 export type AnswerType = { YesNo: boolean } | { MultiChoice: string };
+export interface BugReport {
+	img: Uint8Array | number[];
+	creator: Principal;
+	message: string;
+}
 export interface Poll {
 	id: bigint;
 	created: bigint;
@@ -50,11 +55,13 @@ export interface UserProfile {
 }
 export interface _SERVICE {
 	answerPoll: ActorMethod<[bigint, boolean], Result>;
+	createBugReport: ActorMethod<[string, Uint8Array | number[]], Result_4>;
 	createPoll: ActorMethod<[string], Result_4>;
 	createUser: ActorMethod<[string], Result>;
 	deletePoll: ActorMethod<[bigint], Result>;
 	depositCycles: ActorMethod<[], undefined>;
 	getAllAnswers: ActorMethod<[], Array<Answer>>;
+	getAllBugReports: ActorMethod<[], Array<BugReport>>;
 	getAllPolls: ActorMethod<[], Array<Poll>>;
 	getAllPollsWithYesNoAnswers: ActorMethod<[], Result_3>;
 	getPoll: ActorMethod<[bigint], Result_2>;
